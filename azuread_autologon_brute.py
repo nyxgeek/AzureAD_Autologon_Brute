@@ -172,7 +172,7 @@ def checkURL(userline):
         print("[+] VALID USERNAME, invalid password :{}".format(credentialset))
         writeLock.acquire()
         with open(outputfile,"a") as outfilestream:
-            outfilestream.write("[+] FOUND VALID USERNAME:{}".format(credentialset))
+            outfilestream.write("[+] FOUND VALID USERNAME:{}\n".format(credentialset))
         writeLock.release()
     elif "DesktopSsoToken" in xmlresponse:
         print("[+] VALID CREDS! :{}".format(credentialset))
@@ -188,13 +188,13 @@ def checkURL(userline):
         print("[+] VALID USERNAME, no password in AzureAD:{}".format(credentialset))
         writeLock.acquire()
         with open(outputfile,"a") as outfilestream:
-            outfilestream.write("[+] FOUND USERNAME, no password in AzureAD :{}".format(credentialset))
+            outfilestream.write("[+] FOUND USERNAME, no password in AzureAD :{}\n".format(credentialset))
         writeLock.release()
     elif "AADSTS80014" in xmlresponse:
         print("[+] VALID USERNAME, max pass-through authentication time exceeded :{}".format(credentialset))
         writeLock.acquire()
         with open(outputfile,"a") as outfilestream:
-            outfilestream.write("[+] FOUND USERNAME, max pass-through authentication time exceeded :{}".format(credentialset))
+            outfilestream.write("[+] FOUND USERNAME, max pass-through authentication time exceeded :{}\n".format(credentialset))
         writeLock.release()
     elif "AADSTS50053" in xmlresponse:
         print("[?] SMART LOCKOUT DETECTED - Unable to enumerate:{}".format(credentialset))
