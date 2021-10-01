@@ -11,7 +11,7 @@ python3 azuread_autologon_brute.py -d intranet.directory -U users.txt -p Passwor
 
 
 ```
-[~/deuce/azuread_autologon] # python3 azuread_autologon_brute.py -d intranet.directory -U users.txt -p Password1
+[~/AzureAD_Autologon_Brute] # python3 azuread_autologon_brute.py -d intranet.directory -U users.txt -p Password1
 Domain is  intranet.directory
 Setting password as: Password1
 Reading users from file: users.txt
