@@ -190,6 +190,8 @@ def checkURL(userline):
         with open(outputfile,"a") as outfilestream:
             outfilestream.write("[+] FOUND USERNAME, no password in AzureAD :{}\n".format(credentialset))
         writeLock.release()
+    elif "AADSTS90002" in xmlresponse:
+        print("[-] No active subscriptions for the tenant:{}".format(credentialset))
     elif "AADSTS80014" in xmlresponse:
         print("[+] VALID USERNAME, max pass-through authentication time exceeded :{}".format(credentialset))
         writeLock.acquire()
