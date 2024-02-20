@@ -207,6 +207,8 @@ def checkURL(userline):
         writeLock.release()
     elif "AADSTS50053" in xmlresponse:
         print("[?] SMART LOCKOUT DETECTED - Unable to enumerate:{}".format(credentialset))
+    elif "AADSTS50057" in xmlresponse:
+        print("[?] DISABLED ACCOUNT:{}".format(credentialset))
     elif "AADSTS81016" in xmlresponse:
         print("[?] Invalid STS - May not have DesktopSSO or Directory Sync Enabled:{}".format(credentialset))
         print("Exiting now.")
