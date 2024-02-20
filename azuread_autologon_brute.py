@@ -17,7 +17,9 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 import uuid
 import argparse
+import sys
 
+exit_request = False
 writeLock = Semaphore(value = 1)
 
 # initiate the parser
@@ -115,6 +117,13 @@ else:
 
 #@retry
 def checkURL(userline):
+
+    global exit_request
+
+    if exit_request:
+        sys.exit()
+
+
     username = userline.rstrip()
     if not ( "@" in username ):
         if verbose:
@@ -198,6 +207,11 @@ def checkURL(userline):
         writeLock.release()
     elif "AADSTS50053" in xmlresponse:
         print("[?] SMART LOCKOUT DETECTED - Unable to enumerate:{}".format(credentialset))
+    elif "AADSTS81016" in xmlresponse:
+        print("[?] Invalid STS - May not have DesktopSSO or Directory Sync Enabled:{}".format(credentialset))
+        print("Exiting now.")
+        exit_request = True
+        sys.exit()
     else:
         print("[!] I have NO clue what just happened. sorry. ", credentialset)
         print(xmlresponse)
@@ -208,7 +222,7 @@ def checkUserFile():
     f = open(userfile)
     listthread=[]
     for userline in f:
-        while int(threading.activeCount()) >= int(thread_count):
+        while int(threading.activeCount()) > int(thread_count):
             time.sleep(1)
         #print "Spawing thread for: " + userline + " thread(" + str(threading.activeCount()) +")"
         x = threading.Thread(target=checkURL, args=(userline,))
