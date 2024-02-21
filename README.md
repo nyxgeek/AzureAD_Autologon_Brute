@@ -5,11 +5,10 @@ https://arstechnica.com/information-technology/2021/09/new-azure-active-director
 
 
 ## Update - 2024.02.21 ##
-I think this is borked. The AADSTS81016 that people were reporting now seems to indicate a valid account. I think finding valid passwords might be broken altogether. I'll investigate more as time permits. 
+The AADSTS81016 that people were reporting now seems to indicate a valid account.
 
+Thanks to @rootsecdev for validating that password spray functionality still works!
 
-**JUST BE AWARE THAT PASSWORD SPRAYS ARE FUBAR ATM.**
-User enum still works.
 
 
 
