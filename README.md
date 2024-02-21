@@ -4,6 +4,16 @@ Brute force attack tool for Azure AD Autologon
 https://arstechnica.com/information-technology/2021/09/new-azure-active-directory-password-brute-forcing-flaw-has-no-fix/
 
 
+## Update - 2024.02.21 ##
+I think this is borked. The AADSTS81016 that people were reporting now seems to indicate a valid account. I think finding valid passwords might be broken altogether. I'll investigate more as time permits. 
+
+
+**JUST BE AWARE THAT PASSWORD SPRAYS ARE FUBAR ATM.**
+User enum still works.
+
+
+
+
 ```
 Usage:
 python3 azuread_autologon_brute.py -d intranet.directory -U users.txt -p Password1
